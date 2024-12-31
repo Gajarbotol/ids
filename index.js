@@ -13,8 +13,8 @@ const port = process.env.PORT || 3000;
 const redisClient = new Redis();
 const scrapeQueue = new Queue('scrapeQueue', {
   redis: {
-    host: '127.0.0.1',
-    port: 6379
+    host: 'dpg-ctpn8vjqf0us73edc5m0-a',
+    port: 5432
   }
 });
 
