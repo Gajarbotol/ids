@@ -31,8 +31,13 @@ const scrapeData = async () => {
                     log.write(`User ID ${userId}: Less than 3 H3 tags found.\n`);
                 }
 
-                const pageContent = response2.data.trim();
-                output.write(`User ID ${userId}\n${thirdH3}\n${pageContent}\n`);
+                // Extract the title from the second page (urlTemplate2)
+                const $page2 = cheerio.load(response2.data);
+                const pageTitle = $page2('title').text().trim(); // Get the title of the page
+
+                // Write user ID, third H3, and title of second page to the output file
+                output.write(`User ID ${userId}\n${thirdH3}\nTitle from second page: ${pageTitle}\n\n`);
+
                 log.write(`User ID ${userId}: Successfully processed.\n`);
             } else {
                 log.write(`User ID ${userId}: Failed to retrieve pages. Status codes: ${response1.status}, ${response2.status}\n`);
