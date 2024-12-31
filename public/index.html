@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Console</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #1d1f21;
+            color: #c5c8c6;
+            padding: 20px;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        #console {
+            background-color: #282a2e;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <h1>Web Console</h1>
+    <button class="button" onclick="startScraping()">Start Scraping</button>
+    <button class="button" onclick="pingServer()">Ping Server</button>
+    <a href="/download-output" class="button" download>Download Output File</a>
+    <div id="console"></div>
+
+    <script>
+        function appendToConsole(message) {
+            const consoleDiv = document.getElementById('console');
+            consoleDiv.innerHTML += message + '<br>';
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        async function startScraping() {
+            appendToConsole('Starting scraping...');
+            try {
+                const response = await fetch('/start-scraping');
+                const text = await response.text();
+                appendToConsole(text);
+            } catch (error) {
+                appendToConsole('Error: ' + error.message);
+            }
+        }
+
+        async function pingServer() {
+            appendToConsole('Pinging server...');
+            try {
+                const response = await fetch('/ping');
+                const text = await response.text();
+                appendToConsole(text);
+            } catch (error) {
+                appendToConsole('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
